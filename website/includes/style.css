@@ -143,3 +143,104 @@ li.navbg:hover {
     width: auto;
 	margin-left: 10px;
 }
+
+/* Classes relatives aux membres */
+
+#member tr
+{
+	border-color: #3a3a3a;
+	border-style: solid;
+	border-width: 2px;
+}
+
+.member_top
+{
+	background-color: #8a8aa3;
+}
+
+.memberbg_10
+{
+	background-color: #101010;
+	color: #ffffff;
+}
+
+.memberbg_9	{	background-color: #202020;	}
+.memberbg_8	{	background-color: #303030;	}
+.memberbg_7	{	background-color: #404040;	}
+.memberbg_pnj {	background-color: #505050;	}
+.memberbg_6	{	background-color: #606060;	}
+.memberbg_5	{	background-color: #707070;	}
+.memberbg_4	{	background-color: #808080;	}
+.memberbg_3	{	background-color: #909090;	}
+.memberbg_2	{	background-color: #a0a0a0;	}
+.memberbg_1	{	background-color: #b0b0b0;	}
+.memberbg_0	{	background-color: #c0b0c0;	}
+
+/* Classes relatives à la Frise Chrono' */
+
+.chrono0
+{
+	background-color : #9932CC;
+	text-align: center;
+	padding: 20px;
+	margin: 20px;
+}
+
+.chrono1
+{
+	background-color : #DAA520;
+	text-align: center;
+	padding: 20px;
+	margin: 20px;
+}
+
+.chrono2
+{
+	background-color : #FFD700;
+	text-align: center;
+	padding: 20px;
+	margin: 20px;
+}
+
+.chrono3
+{
+	background-color : #800000;
+	text-align: center;
+	padding: 20px;
+	margin: 20px;
+}
+
+.chrono4
+{
+	background-color : #FA8072;
+	text-align: center;
+	padding: 20px;
+	margin: 20px;
+}
+
+.chrono5
+{
+	background-color : #2E8B57;
+	text-align: center;
+	padding: 20px;
+	margin: 20px;
+}
+
+/* Classes relatives aux forums */
+
+.forumrank0		{	background-color: rgba(0, 0, 0, 0.0);	}
+.forumrank1		{	background-color: rgba(0, 0, 0, 0.1);	}
+.forumrank2		{	background-color: rgba(0, 0, 0, 0.2);	}
+.forumrank3		{	background-color: rgba(0, 0, 0, 0.3);	}
+.forumrank4		{	background-color: rgba(0, 0, 0, 0.4);	}
+.forumrank5		{	background-color: rgba(0, 0, 0, 0.5);	}
+.forumrank6		{	background-color: rgba(0, 0, 0, 0.6);	}
+.forumrank7		{	background-color: rgba(0, 0, 0, 0.7);	}
+.forumrank8		{	background-color: rgba(0, 0, 0, 0.8);	}
+.forumrank9		{	background-color: rgba(0, 0, 0, 0.9);	}
+.forumrank10		{	background-color: rgba(0, 0, 0, 1);	}
+
+/* Classes sur la magie */
+.magie			{	border-radius: 10px;	}
+.magie_tab		{	padding-left: 10%; padding-right: 10%; }
+.magie_type		{	border-radius:50%;		}
