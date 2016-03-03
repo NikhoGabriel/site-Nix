@@ -193,6 +193,7 @@
 		<p class="navbg2" style="text-align: center;">Membres honorable qui ont apporté un soutien considérable à Nix !<br />
 		<br />
 		&bull; Alwine<br />
+		&bull; Einarr<br />
 		&bull; Glenn<br />
 		&bull; Lune<br />
 		&bull; Shaolern<br />
