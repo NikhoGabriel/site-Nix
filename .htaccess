@@ -1,0 +1,2 @@
+ErrorDocument 404 http://www.rpnix.com/index.php?p=404
+Options -Indexes 

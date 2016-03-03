@@ -1,0 +1,145 @@
+@font-face {
+    font-family: minecraft;
+    src: url('minecraft.ttf');
+}
+
+* { font-family:"minecraft"; }
+
+/* element généraux */
+
+#header {
+    background-color: #2b2b2b;
+    height: 76px;
+    position: relative;
+    width: auto;
+}
+
+#main_c {
+    background-image: url("/pics/Nix.jpg");
+    background-position: center top;
+    width: 100%;
+}
+
+#site {
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+}
+
+body {
+	margin: 0;
+}
+
+a
+{
+	text-decoration: none;
+	color: #000000;
+}
+
+em
+{
+	font-style: normal;
+}
+
+strong
+{
+	font-weight: normal;
+}
+
+.alert {
+    border-color: #6d6d6d;
+    border-style: solid;
+    border-width: 1px;
+	padding: 10px;
+	margin-bottom: 20px;
+	background-color: #808099;
+	margin-left: 10px;
+}
+
+.bigalert {
+    border-color: #6d6d6d;
+    border-style: solid;
+    border-width: 1px;
+	padding: 10px;
+	margin-bottom: 20px;
+	background-color: #EE6060;
+	margin-left: 10px;
+}
+
+#footer {
+    background-color: #E0E0E0;
+    height: 32px;
+    position: relative;
+    text-align: center;
+    width: auto;
+}
+
+/* elements nav */
+
+div.navtitle {
+	background-color: #8080EE ;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    line-height: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-top: 0;
+    padding: 10px;
+    text-align: center;
+    width: 200px;
+}
+
+ul.nav {
+	background-color: #8080EE ;
+    line-height: 20px;
+    margin-bottom: 16px;
+    margin-top: 0;
+    padding: 0;
+}
+p.navbg2 {
+	background-color: #8080EE ;
+    line-height: 20px;
+    margin-bottom: 16px;
+    margin-top: 0;
+    padding: 10;
+}
+.navbg2 a:hover
+{
+	color: #EEEEEE;
+}
+
+a.link {
+    text-decoration: none;
+	color: #000000;
+}
+
+li.navbg {
+    background-image: url("/pics/menuOFF.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    list-style-type: none;
+    padding: 10px;
+}
+
+li.navbg:hover {
+    background-image: url("/pics/menuON.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    list-style-type: none;
+    padding: 10px;
+	background-color: #B0B0FF ;
+}
+
+/* elements principaux */
+
+#main {
+    background-color: #aaaaaa;
+    background-repeat: repeat;
+    border-color: #6d6d6d;
+    border-style: solid;
+    border-width: 1px;
+    padding: 20px;
+    position: relative;
+    width: auto;
+	margin-left: 10px;
+}
