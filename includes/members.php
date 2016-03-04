@@ -11,7 +11,7 @@
 	
 	<p>Voici les <?= $line['number']?> membres inscrits sur Nix.</p>
 	<? 
-	if ($_SESSION["rank"] >= 4) {
+	if ($_SESSION["rank"] >= moderator) {
 	$answer = $db->query("SELECT * FROM members WHERE rank > 0 AND rank = 6 AND pnj = 0 ORDER BY rank DESC, name ASC");
 	$answer1 = $db->query("SELECT * FROM members WHERE rank > 0 AND rank = 5 AND pnj = 0 ORDER BY rank DESC, name ASC");
 	$answer2 = $db->query("SELECT * FROM members WHERE rank > 0 AND rank = 4 AND pnj = 0 ORDER BY rank DESC, name ASC");
@@ -21,23 +21,25 @@
 	$answer6 = $db->query("SELECT * FROM members WHERE rank > 0 AND rank = 7 AND pnj = 0 ORDER BY rank DESC, name ASC");
 	$answer7 = $db->query("SELECT * FROM members WHERE rank > 0 AND rank = 8 AND pnj = 0 ORDER BY rank DESC, name ASC");
 	$answer8 = $db->query("SELECT * FROM members WHERE rank > 0 AND rank = 9 AND pnj = 0 ORDER BY rank DESC, name ASC");
+	$answer10 = $db->query("SELECT * FROM members WHERE rank > 0 AND rank = 10 AND pnj = 0 ORDER BY rank DESC, name ASC");
 	$answer9 = $db->query("SELECT * FROM members WHERE pnj = 1 ORDER BY rank DESC, name ASC");
 	}
 	else {
-	$answer = $db->query("SELECT * FROM members WHERE rank > 0 AND removed = 0 AND ban = 0 AND invisible = 0 AND rank = 6 ORDER BY rank DESC, name ASC");
-	$answer1 = $db->query("SELECT * FROM members WHERE rank > 0 AND removed = 0 AND ban = 0 AND invisible = 0 AND rank = 5 ORDER BY rank DESC, name ASC");
-	$answer2 = $db->query("SELECT * FROM members WHERE rank > 0 AND removed = 0 AND ban = 0 AND invisible = 0 AND rank = 4 ORDER BY rank DESC, name ASC");
-	$answer3 = $db->query("SELECT * FROM members WHERE rank > 0 AND removed = 0 AND ban = 0 AND invisible = 0 AND rank = 3 ORDER BY rank DESC, name ASC");
-	$answer4 = $db->query("SELECT * FROM members WHERE rank > 0 AND removed = 0 AND ban = 0 AND invisible = 0 AND rank = 2 ORDER BY rank DESC, name ASC");
-	$answer5 = $db->query("SELECT * FROM members WHERE rank > 0 AND removed = 0 AND ban = 0 AND invisible = 0 AND rank = 1 ORDER BY rank DESC, name ASC");
+	$answer = $db->query("SELECT * FROM members WHERE rank > 0 AND removed = 0 AND ban = 0 AND pnj = 0 AND invisible = 0 AND rank = 6 ORDER BY rank DESC, name ASC");
+	$answer1 = $db->query("SELECT * FROM members WHERE rank > 0 AND removed = 0 AND ban = 0 AND pnj = 0 AND invisible = 0 AND rank = 5 ORDER BY rank DESC, name ASC");
+	$answer2 = $db->query("SELECT * FROM members WHERE rank > 0 AND removed = 0 AND ban = 0 AND pnj = 0 AND invisible = 0 AND rank = 4 ORDER BY rank DESC, name ASC");
+	$answer3 = $db->query("SELECT * FROM members WHERE rank > 0 AND removed = 0 AND ban = 0 AND pnj = 0 AND invisible = 0 AND rank = 3 ORDER BY rank DESC, name ASC");
+	$answer4 = $db->query("SELECT * FROM members WHERE rank > 0 AND removed = 0 AND ban = 0 AND pnj = 0 AND invisible = 0 AND rank = 2 ORDER BY rank DESC, name ASC");
+	$answer5 = $db->query("SELECT * FROM members WHERE rank > 0 AND removed = 0 AND ban = 0 AND pnj = 0 AND invisible = 0 AND rank = 1 ORDER BY rank DESC, name ASC");
+	$answer6 = $db->query("SELECT * FROM members WHERE rank > 0 AND removed = 0 AND ban = 0 AND pnj = 0 AND invisible = 0 AND rank = 7 ORDER BY rank DESC, name ASC");
 	}
 	?>
 	
-	<? echo $skin ?> <? echo $filename ?>
-<table id="members">
+	
+<table id="member" cellspacing="0" cellpadding="0" width="100%">
 
-<?if ($_SESSION["rank"] >= 6) {	?>
-	<tr class="rank_cat">
+<?php	if ($_SESSION["rank"] >= operator) {	?>
+	<tr class="member_top">
 		<th>Consciences</th>
 		<th>Titre</th>
 		<th style="text-align: center;">BG</th>
@@ -51,7 +53,7 @@
 		<th style="text-align: center;">Inv'</th>
 		<th style="text-align: center;">E. Magique / E.Vitale</th>
 	</tr>
-	<?php while ($line = $answer8->fetch()) {  $filename = 'pics/avatar/miniskin_' .$line['id']. '.png';if (file_exists($filename)) {$skin = $line['id'];} else {$skin = 'no';}
+	<?php while ($line = $answer10->fetch()) {  $filename = 'pics/avatar/miniskin_' .$line['id']. '.png';if (file_exists($filename)) {$skin = $line['id'];} else {$skin = 'no';}
 				$sorts = $db->query("SELECT COUNT(*) AS sort FROM incan_get WHERE incan_get.user_id =".$line['id'].""); $line2 = $sorts->fetch();
 				$fofo = $db->query("SELECT COUNT(*) AS fofo FROM forum_post WHERE forum_post.user_id =".$line['id'].""); $line3 = $fofo->fetch();
 				switch ($line ["valid_bg"]) {	case 1: $valid_bg= "on" ; $bgtitle ="BackGround RP Validé par le Staff"; break; case 0: $valid_bg= "off" ; $bgtitle ="BG en cours d'écriture"; break;		}
@@ -72,26 +74,26 @@
 	if ($line['magie_rank'] == 6) {if ($line['E_magique'] >= 0  AND $line['E_magique'] <= 49) 	{	$tmagie = 0 ;	}if ($line['E_magique'] >= 50 AND $line['E_magique'] <= 99) 	{	$tmagie = 10 ;	}if ($line['E_magique'] >= 100 AND $line['E_magique'] <= 149) 	{	$tmagie = 20 ;	}if ($line['E_magique'] >= 150 AND $line['E_magique'] <= 199) 	{	$tmagie = 30 ;	}if ($line['E_magique'] >= 200 AND $line['E_magique'] <= 249) 	{	$tmagie = 40 ;	}if ($line['E_magique'] >= 250 AND $line['E_magique'] <= 299) 	{	$tmagie = 50 ;	}if ($line['E_magique'] >= 300 AND $line['E_magique'] <= 349)	{	$tmagie = 60 ;	}if ($line['E_magique'] >= 350 AND $line['E_magique'] <= 399) 	{	$tmagie = 70 ;	}if ($line['E_magique'] >= 400 AND $line['E_magique'] <= 449) 	{	$tmagie = 80 ;	}if ($line['E_magique'] >= 450 AND $line['E_magique'] <= 499) 	{	$tmagie = 90 ;	}if ($line['E_magique'] == 500) 	{	$tmagie = 100 ;	}} if ($line['E_magique'] > 500) 	{	$tmagie = "over" ;	}
 	if ($line['magie_rank'] >= 7) { $tmagie = 'inf';} 
 	if ($line['E_vitale'] >= 0  AND $line['E_vitale'] <= 19) 	{	$tvie = 0 ;	}if ($line['E_vitale'] >= 20 AND $line['E_vitale'] <= 39) 	{	$tvie = 10 ;	}if ($line['E_vitale'] >= 40 AND $line['E_vitale'] <= 59) 	{	$tvie = 20 ;	}if ($line['E_vitale'] >= 60 AND $line['E_vitale'] <= 79) 	{	$tvie = 30 ;	}if ($line['E_vitale'] >= 80 AND $line['E_vitale'] <= 99) 	{	$tvie = 40 ;	}if ($line['E_vitale'] >= 100 AND $line['E_vitale'] <= 119) 	{	$tvie = 50 ;	}if ($line['E_vitale'] >= 120 AND $line['E_vitale'] <= 139)	{	$tvie = 60 ;	}if ($line['E_vitale'] >= 140 AND $line['E_vitale'] <= 159) 	{	$tvie = 70 ;	}if ($line['E_vitale'] >= 160 AND $line['E_vitale'] <= 179) 	{	$tvie = 80 ;	}if ($line['E_vitale'] >= 180 AND $line['E_vitale'] <= 199) 	{	$tvie = 90 ;	}if ($line['E_vitale'] == 200) 	{	$tvie = 100 ;	}?>
-	<tr class="rank_cat">
-		<td class="member_Crea" style="color: white"><img class="magie_type" width="27" src="pics/<? echo $rank?>" alt="Grade Suprême" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" style="color: white"><?= $line['name']?></a></td>
-		<td class="member_Crea" style="color: white"> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
-		<td class="member_Crea" style="text-align: center; color: white"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
-		<td class="member_Crea" style="text-align: center; color: white"><? echo $line3['fofo']?></td>
-		<td class="member_Crea" style="text-align: center; color: white"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
-		<td class="member_Crea" style="text-align: center; color: white"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
-		<td class="member_Crea" style="text-align: center; color: white"><? echo $line2['sort']?></td>
-		<td class="member_Crea" style="text-align: center; color: white"><img src="pics/spe_<?= ($line['specialisation'])?>.png" width="27" alt="Spécialisation : <?= ($line['specialisation'])?>" class="magie_type" title="Spécialisation : <?= ($line['specialisation'])?>" /></td>
-		<td class="member_Crea" style="text-align: center; color: white"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
-		<td class="member_Crea" style="text-align: center; color: white"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
-		<td class="member_Crea" style="text-align: center; color: white"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td>
-		<td class="member_Crea" style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?> <?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
+	<tr class="memberbg_10">
+		<td><img class="magie_type" width="27" src="pics/<? echo $rank?>" alt="Grade Suprême" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" style="color: white"><?= $line['name']?></a></td>
+		<td> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
+		<td style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
+		<td style="text-align: center;"><? echo $line3['fofo']?></td>
+		<td style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
+		<td style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
+		<td style="text-align: center;"><? echo $line2['sort']?></td>
+		<td style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" alt="Spécialisation : <?= ($line['specialisation'])?>" width="27" class="magie_type" title="Spécialisation : <?= ($line['specialisation'])?>" /></td>
+		<td style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
+		<td style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
+		<td style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td>
+		<td style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?> <?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
 		
 	</tr>
 	<?php } ?>
 <? } ?>
 
-<?if ($_SESSION["rank"] >= 5) {	?>
-	<tr class="rank_cat">
+<?if ($_SESSION["rank"] >= admin) {	?>
+	<tr class="member_top">
 		<th>Titans</th>
 		<th>Titre</th>
 		<th style="text-align: center;">BG</th>
@@ -105,7 +107,7 @@
 		<th style="text-align: center;">Inv'</th>
 		<th style="text-align: center;">E. Magique / E.Vitale</th>
 	</tr>
-	<?php while ($line = $answer7->fetch()) {  $filename = 'pics/avatar/miniskin_' .$line['id']. '.png';if (file_exists($filename)) {$skin = $line['id'];} else {$skin = 'no';}
+	<?php while ($line = $answer8->fetch()) {  $filename = 'pics/avatar/miniskin_' .$line['id']. '.png';if (file_exists($filename)) {$skin = $line['id'];} else {$skin = 'no';}
 				$sorts = $db->query("SELECT COUNT(*) AS sort FROM incan_get WHERE incan_get.user_id =".$line['id'].""); $line2 = $sorts->fetch();
 				$fofo = $db->query("SELECT COUNT(*) AS fofo FROM forum_post WHERE forum_post.user_id =".$line['id'].""); $line3 = $fofo->fetch();
 				switch ($line ["valid_bg"]) {	case 1: $valid_bg= "on" ; $bgtitle ="BackGround RP Validé par le Staff"; break; case 0: $valid_bg= "off" ; $bgtitle ="BG en cours d'écriture"; break;		}
@@ -127,26 +129,26 @@
 	if ($line['magie_rank'] >= 7) { $tmagie = 'inf';}
 	if ($line['E_vitale'] >= 0  AND $line['E_vitale'] <= 19) 	{	$tvie = 0 ;	}if ($line['E_vitale'] >= 20 AND $line['E_vitale'] <= 39) 	{	$tvie = 10 ;	}if ($line['E_vitale'] >= 40 AND $line['E_vitale'] <= 59) 	{	$tvie = 20 ;	}if ($line['E_vitale'] >= 60 AND $line['E_vitale'] <= 79) 	{	$tvie = 30 ;	}if ($line['E_vitale'] >= 80 AND $line['E_vitale'] <= 99) 	{	$tvie = 40 ;	}if ($line['E_vitale'] >= 100 AND $line['E_vitale'] <= 119) 	{	$tvie = 50 ;	}if ($line['E_vitale'] >= 120 AND $line['E_vitale'] <= 139)	{	$tvie = 60 ;	}if ($line['E_vitale'] >= 140 AND $line['E_vitale'] <= 159) 	{	$tvie = 70 ;	}if ($line['E_vitale'] >= 160 AND $line['E_vitale'] <= 179) 	{	$tvie = 80 ;	}if ($line['E_vitale'] >= 180 AND $line['E_vitale'] <= 199) 	{	$tvie = 90 ;	}if ($line['E_vitale'] == 200) 	{	$tvie = 100 ;	}
 	?>
-	<tr class="rank_cat">
-		<td class="member_Titan"><img class="magie_type" src="pics/<? echo $rank?>" width="27" alt="Grade Titan" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png"  width="20px"/> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
-		<td class="member_Titan"> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
-		<td class="member_Titan" style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
-		<td class="member_Titan" style="text-align: center;"><? echo $line3['fofo']?></td>
-		<td class="member_Titan" style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
-		<td class="member_Titan" style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
-		<td class="member_Titan" style="text-align: center;"><? echo $line2['sort']?></td>
-		<td class="member_Titan" style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" alt="Spécialisation : <?= ($line['specialisation'])?>" width="27" class="magie_type" title="Spécialisation : <?= ($line['specialisation'])?>" /></td>
-		<td class="member_Titan" style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
-		<td class="member_Titan" style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
-		<td class="member_Titan" style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td>
-		<td class="member_Titan" style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
+	<tr class="memberbg_9">
+		<td><img class="magie_type" src="pics/<? echo $rank?>" width="27" alt="Grade Titan" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png"  width="20px"/> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
+		<td> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
+		<td style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
+		<td style="text-align: center;"><? echo $line3['fofo']?></td>
+		<td style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
+		<td style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
+		<td style="text-align: center;"><? echo $line2['sort']?></td>
+		<td style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" alt="Spécialisation : <?= ($line['specialisation'])?>" width="27" class="magie_type" title="Spécialisation : <?= ($line['specialisation'])?>" /></td>
+		<td style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
+		<td style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
+		<td style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td>
+		<td style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
 		
 	</tr>
 	<?php } ?>
 	
 <? } ?>
-	<? if ($_SESSION["rank"] >= 4) {	?>
-	<tr class="rank_cat">
+	<? if ($_SESSION["rank"] >= moderator) {	?>
+	<tr class="member_top">
 		<th>Entités</th>
 		<th>Titre</th>
 		<th style="text-align: center;">BG</th>
@@ -160,7 +162,7 @@
 		<th style="text-align: center;">Inv'</th>
 		<th style="text-align: center;">E. Magique / E.Vitale</th>
 	</tr>
-	<?php while ($line = $answer6->fetch()) { $filename = 'pics/avatar/miniskin_' .$line['id']. '.png';if (file_exists($filename)) {$skin = $line['id'];} else {$skin = 'no';}
+	<?php while ($line = $answer7->fetch()) { $filename = 'pics/avatar/miniskin_' .$line['id']. '.png';if (file_exists($filename)) {$skin = $line['id'];} else {$skin = 'no';}
 				$sorts = $db->query("SELECT COUNT(*) AS sort FROM incan_get WHERE incan_get.user_id =".$line['id'].""); $line2 = $sorts->fetch();
 				$fofo = $db->query("SELECT COUNT(*) AS fofo FROM forum_post WHERE forum_post.user_id =".$line['id'].""); $line3 = $fofo->fetch();
 				switch ($line ["valid_bg"]) {	case 1: $valid_bg= "on" ; $bgtitle ="BackGround RP Validé par le Staff"; break; case 0: $valid_bg= "off" ; $bgtitle ="BG en cours d'écriture"; break;		}
@@ -168,7 +170,7 @@
 				switch ($line ["invisible"])  {	case 1: $vanish= "on" ; $title= "Inv"; break; case 0: $vanish= "off" ; $title= "V"; break;		}
 				switch ($line ["magie_rank"]) { case 0: $mrank= "Profane"; break; case 1: $mrank= "Adepte"; break; case 2: $mrank= "Apprenti Magicien"; break; case 3: $mrank= "Magicien"; break; case 4: $mrank= "Mage"; break; case 5: $mrank= "Archimage"; break; case  6: $mrank= "Sage"; break; case 7: $mrank= "Dieu"; break; case 8: $mrank="Titan"; case 9: $mrank="Niveau Suprême"; break;}
 				switch ($line['hardcore']) { case 0: $cycle= "Rem" ; break; case 1: $cycle= "M"; break;}
-				$rank = "rank7.png";
+				$rank = "rank8.png";
 				if ($line["technician"] == 1) { $rank = "ranktech.png" ;}
 				if ($line["ban"] == 1) { $rank = "rankban.png" ;}
 				if ($line["removed"] == 1) { $rank = "rankdel.png" ;}
@@ -182,25 +184,37 @@
 	if ($line['magie_rank'] >= 7) { $tmagie = 'inf';}
 	if ($line['E_vitale'] >= 0  AND $line['E_vitale'] <= 19) 	{	$tvie = 0 ;	}if ($line['E_vitale'] >= 20 AND $line['E_vitale'] <= 39) 	{	$tvie = 10 ;	}if ($line['E_vitale'] >= 40 AND $line['E_vitale'] <= 59) 	{	$tvie = 20 ;	}if ($line['E_vitale'] >= 60 AND $line['E_vitale'] <= 79) 	{	$tvie = 30 ;	}if ($line['E_vitale'] >= 80 AND $line['E_vitale'] <= 99) 	{	$tvie = 40 ;	}if ($line['E_vitale'] >= 100 AND $line['E_vitale'] <= 119) 	{	$tvie = 50 ;	}if ($line['E_vitale'] >= 120 AND $line['E_vitale'] <= 139)	{	$tvie = 60 ;	}if ($line['E_vitale'] >= 140 AND $line['E_vitale'] <= 159) 	{	$tvie = 70 ;	}if ($line['E_vitale'] >= 160 AND $line['E_vitale'] <= 179) 	{	$tvie = 80 ;	}if ($line['E_vitale'] >= 180 AND $line['E_vitale'] <= 199) 	{	$tvie = 90 ;	}if ($line['E_vitale'] == 200) 	{	$tvie = 100 ;	}
 	?>
-	<tr class="rank_cat">
-		<td class="member_Dieu"><img class="magie_type" src="pics/<? echo $rank?>" width="27"  alt="Grade Dieu" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
-		<td class="member_Dieu"> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
-		<td class="member_Dieu" style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
-		<td class="member_Dieu" style="text-align: center;"><? echo $line3['fofo']?></td>
-		<td class="member_Dieu" style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
-		<td class="member_Dieu" style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
-		<td class="member_Dieu" style="text-align: center;"><? echo $line2['sort']?></td>
-		<td class="member_Dieu" style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" alt="Spécialisation : <?= ($line['specialisation'])?>" width="27" class="magie_type" title="Spécialisation : <?= ($line['specialisation'])?>" /></td>
-		<td class="member_Dieu" style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
-		<td class="member_Dieu" style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
-		<td class="member_Dieu" style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td>
-		<td class="member_Dieu" style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
+	<tr class="memberbg_9">
+		<td><img class="magie_type" src="pics/<? echo $rank?>" width="27"  alt="Grade Dieu" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
+		<td> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
+		<td style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
+		<td style="text-align: center;"><? echo $line3['fofo']?></td>
+		<td style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
+		<td style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
+		<td style="text-align: center;"><? echo $line2['sort']?></td>
+		<td style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" alt="Spécialisation : <?= ($line['specialisation'])?>" width="27" class="magie_type" title="Spécialisation : <?= ($line['specialisation'])?>" /></td>
+		<td style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
+		<td style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
+		<td style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td>
+		<td style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
 		
 	</tr>
 	<?php } ?>
-	<? } ?>
 	
-	<? if ($_SESSION['rank'] >= 4) { ?>
+	<tr class="member_top">
+		<th>PNJs</th>
+		<th>Titre</th>
+		<th style="text-align: center;">BG</th>
+		<th style="text-align: center;">Msg.</th>
+		<th style="text-align: center;">Magie</th>
+		<th style="text-align: center;">Niv'</th>
+		<th style="text-align: center;">Sorts</th>
+		<th style="text-align: center;">Spé'</th>
+		<th style="text-align: center;">Race</th>
+		<th style="text-align: center;">Cycle</th>
+		<th style="text-align: center;">Inv'</th>
+		<th style="text-align: center;">E. Magique / E.Vitale</th>
+	</tr>
 	<?php while ($line = $answer9->fetch()) {  $filename = 'pics/avatar/miniskin_' .$line['id']. '.png';if (file_exists($filename)) {$skin = $line['id'];} else {$skin = 'no';}
 				$sorts = $db->query("SELECT COUNT(*) AS sort FROM incan_get WHERE incan_get.user_id =".$line['id'].""); $line2 = $sorts->fetch();
 				$fofo = $db->query("SELECT COUNT(*) AS fofo FROM forum_post WHERE forum_post.user_id =".$line['id'].""); $line3 = $fofo->fetch();
@@ -209,7 +223,7 @@
 				switch ($line ["invisible"])  {	case 1: $vanish= "on" ; $title= "Inv"; break; case 0: $vanish= "off" ; $title= "V"; break;		}
 				switch ($line ["magie_rank"]) { case 0: $mrank= "Profane"; break; case 1: $mrank= "Adepte"; break; case 2: $mrank= "Apprenti Magicien"; break; case 3: $mrank= "Magicien"; break; case 4: $mrank= "Mage"; break; case 5: $mrank= "Archimage"; break; case  6: $mrank= "Sage"; break; case 7: $mrank= "Dieu"; break; case 8: $mrank="Titan"; case 9: $mrank="Niveau Suprême"; break;}
 				switch ($line['hardcore']) { case 0: $cycle= "Rem" ; break; case 1: $cycle= "M"; break;}
-				switch ($line['rank']) { case 3: $color = "Joueurplus"; $rank = "3" ; break; case 4: $color= "Modo"; $rank = "4" ; break; case 5: $color= "MJ"; $rank = "5" ; break; case 6: $color= "MJplus"; $rank ="6"; break;}
+				switch ($line['rank']) { case 3: $rank = "3" ; break; case 4: $rank = "4" ; break; case 5: $rank = "5" ; break; case 6:  $rank ="6"; break; case 7: $rank ="7"; break;}
 				if ($line["technician"] == 1) { $rank = "ranktech.png" ;}
 				if ($line["ban"] == 1) { $rank = "rankban.png" ;}
 				if ($line["removed"] == 1) { $rank = "rankdel.png" ;}
@@ -223,26 +237,79 @@
 	if ($line['magie_rank'] >= 7) { $tmagie = 'inf';}
 	if ($line['E_vitale'] >= 0  AND $line['E_vitale'] <= 19) 	{	$tvie = 0 ;	}if ($line['E_vitale'] >= 20 AND $line['E_vitale'] <= 39) 	{	$tvie = 10 ;	}if ($line['E_vitale'] >= 40 AND $line['E_vitale'] <= 59) 	{	$tvie = 20 ;	}if ($line['E_vitale'] >= 60 AND $line['E_vitale'] <= 79) 	{	$tvie = 30 ;	}if ($line['E_vitale'] >= 80 AND $line['E_vitale'] <= 99) 	{	$tvie = 40 ;	}if ($line['E_vitale'] >= 100 AND $line['E_vitale'] <= 119) 	{	$tvie = 50 ;	}if ($line['E_vitale'] >= 120 AND $line['E_vitale'] <= 139)	{	$tvie = 60 ;	}if ($line['E_vitale'] >= 140 AND $line['E_vitale'] <= 159) 	{	$tvie = 70 ;	}if ($line['E_vitale'] >= 160 AND $line['E_vitale'] <= 179) 	{	$tvie = 80 ;	}if ($line['E_vitale'] >= 180 AND $line['E_vitale'] <= 199) 	{	$tvie = 90 ;	}if ($line['E_vitale'] == 200) 	{	$tvie = 100 ;	}
 	?>
-	<tr class="rank_cat">
-		<td class="member_<? echo $color ?>"><img class="magie_type" src="pics/rank<? echo $rank?>.png" width="27" alt=" " /> <img src="pics/avatar/miniskin_<? echo $skin?>.png"  width="20px"/> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
-		<td class="member_<? echo $color ?>"> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
-		<td class="member_<? echo $color ?>" style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
-		<td class="member_<? echo $color ?>" style="text-align: center;"><? echo $line3['fofo']?></td>
-		<td class="member_<? echo $color ?>" style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
-		<td class="member_<? echo $color ?>" style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
-		<td class="member_<? echo $color ?>" style="text-align: center;"><? echo $line2['sort']?></td>
-		<td class="member_<? echo $color ?>" style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" alt="Spécialisation : <?= ($line['specialisation'])?>" width="27" class="magie_type" title="Spécialisation : <?= ($line['specialisation'])?>" /></td>
-		<td class="member_<? echo $color ?>" style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
-		<td class="member_<? echo $color ?>" style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
-		<td class="member_<? echo $color ?>" style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td>
-		<td class="member_<? echo $color ?>" style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
+	<tr class="memberbg_pnj">
+		<td><img class="magie_type" src="pics/rank<? echo $rank?>.png" width="27" alt=" " /> <img src="pics/avatar/miniskin_<? echo $skin?>.png"  width="20px"/> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
+		<td> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
+		<td style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
+		<td style="text-align: center;"><? echo $line3['fofo']?></td>
+		<td style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
+		<td style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
+		<td style="text-align: center;"><? echo $line2['sort']?></td>
+		<td style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" alt="Spécialisation : <?= ($line['specialisation'])?>" width="27" class="magie_type" title="Spécialisation : <?= ($line['specialisation'])?>" /></td>
+		<td style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
+		<td style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
+		<td style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td>
+		<td style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
 		
 	</tr>
 	<?php } ?>
 	<? } ?>
 	
-	<tr class="rank_cat">
+	<tr class="member_top">
 		<th>Opérateurs</th>
+		<th>Titre</th>
+		<th style="text-align: center;">BG</th>
+		<th style="text-align: center;">Msg.</th>
+		<th style="text-align: center;">Magie</th>
+		<th style="text-align: center;">Niv'</th>
+		<th style="text-align: center;">Sorts</th>
+		<? if ($_SESSION["rank"] >= joueurp) {	?><th style="text-align: center;">Spé'</th> <? } ?>
+		<th style="text-align: center;">Race</th>
+		<th style="text-align: center;">Cycle</th>
+	<? if ($_SESSION["rank"] >= moderator) {	?>	<th style="text-align: center;">Inv'</th> <? } ?>
+		<th style="text-align: center;">E. Magique / E.Vitale</th>
+	</tr>
+	<?php while ($line = $answer6->fetch()) { $filename = 'pics/avatar/miniskin_' .$line['id']. '.png';if (file_exists($filename)) {$skin = $line['id'];} else {$skin = 'no';}
+				$sorts = $db->query("SELECT COUNT(*) AS sort FROM incan_get WHERE incan_get.user_id =".$line['id'].""); $line2 = $sorts->fetch();
+				$fofo = $db->query("SELECT COUNT(*) AS fofo FROM forum_post WHERE forum_post.user_id =".$line['id'].""); $line3 = $fofo->fetch();
+				switch ($line ["valid_bg"]) {	case 1: $valid_bg= "on" ; $bgtitle ="BackGround RP Validé par le Staff"; break; case 0: $valid_bg= "off" ; $bgtitle ="BG en cours d'écriture"; break;		}
+				switch ($line ["magieok"])  {	case 1: $magieok= "on" ; $magietitle= "Magie maitrisée"; break; case 0: $magieok= "off" ; $magietitle= "Magie Non maitrisée"; break;		}
+				switch ($line ["invisible"])  {	case 1: $vanish= "on" ; $title= "Inv"; break; case 0: $vanish= "off" ; $title= "V"; break;		}
+				switch ($line ["magie_rank"]) { case 0: $mrank= "Profane"; break; case 1: $mrank= "Adepte"; break; case 2: $mrank= "Apprenti Magicien"; break; case 3: $mrank= "Magicien"; break; case 4: $mrank= "Mage"; break; case 5: $mrank= "Archimage"; break; case  6: $mrank= "Sage"; break; case 7: $mrank= "Dieu"; break; case 8: $mrank="Titan"; case 9: $mrank="Niveau Suprême"; break;}
+					switch ($line['hardcore']) { case 0: $cycle= "Rem" ; break; case 1: $cycle= "M"; break;}
+					$rank = "rank7.png";
+				if ($line["technician"] == 1) { $rank = "ranktech.png" ;}
+				if ($line["ban"] == 1) { $rank = "rankban.png" ;}
+				if ($line["removed"] == 1) { $rank = "rankdel.png" ;}
+	if ($line['magie_rank'] == 0) {if ($line['E_magique'] >= 0  AND $line['E_magique'] <= 4) 	{	$tmagie = 0 ;	}if ($line['E_magique'] >=5 AND $line['E_magique'] <= 10) 	{	$tmagie = 10 ;	}if ($line['E_magique'] >=10 AND $line['E_magique'] <= 14) 	{	$tmagie = 20 ;	}if ($line['E_magique'] >=15 AND $line['E_magique'] <= 19) 	{	$tmagie = 30 ;	}if ($line['E_magique'] >=20 AND $line['E_magique'] <= 24) 	{	$tmagie = 40 ;	}if ($line['E_magique'] >=25 AND $line['E_magique'] <= 29) 	{	$tmagie = 50 ;	}if ($line['E_magique'] >=30 AND $line['E_magique'] <= 34) 	{	$tmagie = 60 ;	}if ($line['E_magique'] >=35 AND $line['E_magique'] <= 39) 	{	$tmagie = 70 ;	}if ($line['E_magique'] >=40 AND $line['E_magique'] <= 44) 	{	$tmagie = 80 ;	}if ($line['E_magique'] >=45 AND $line['E_magique'] <= 49) 	{	$tmagie = 90 ;	}if ($line['E_magique'] == 50) 	{	$tmagie = 100 ;	}}if ($line['E_magique'] > 50) 	{	$tmagie = "over" ;	}
+	if ($line['magie_rank'] == 1) {if ($line['E_magique'] >= 0  AND $line['E_magique'] <= 9) 	{	$tmagie = 0 ;	}if ($line['E_magique'] >=10 AND $line['E_magique'] <= 19) 	{	$tmagie = 10 ;	}if ($line['E_magique'] >=20 AND $line['E_magique'] <= 29) 	{	$tmagie = 20 ;	}if ($line['E_magique'] >=30 AND $line['E_magique'] <= 39) 	{	$tmagie = 30 ;	}if ($line['E_magique'] >=40 AND $line['E_magique'] <= 49) 	{	$tmagie = 40 ;	}if ($line['E_magique'] >=50 AND $line['E_magique'] <= 59) 	{	$tmagie = 50 ;	}if ($line['E_magique'] >=60 AND $line['E_magique'] <= 69)	{	$tmagie = 60 ;	}if ($line['E_magique'] >=70 AND $line['E_magique'] <= 79) 	{	$tmagie = 70 ;	}if ($line['E_magique'] >=80 AND $line['E_magique'] <= 89) 	{	$tmagie = 80 ;	}if ($line['E_magique'] >=90 AND $line['E_magique'] <= 99) 	{	$tmagie = 90 ;	}if ($line['E_magique'] == 100) 	{	$tmagie = 100 ;	}}if ($line['E_magique'] > 150) 	{	$tmagie = "over" ;	}
+	if ($line['magie_rank'] == 2) {if ($line['E_magique'] >= 0  AND $line['E_magique'] <= 14) 	{	$tmagie = 0 ;	}if ($line['E_magique'] >=15 AND $line['E_magique'] <= 29) 	{	$tmagie = 10 ;	}if ($line['E_magique'] >=30 AND $line['E_magique'] <= 44) 	{	$tmagie = 20 ;	}if ($line['E_magique'] >=45 AND $line['E_magique'] <= 59) 	{	$tmagie = 30 ;	}if ($line['E_magique'] >=60 AND $line['E_magique'] <= 74) 	{	$tmagie = 40 ;	}if ($line['E_magique'] >=75 AND $line['E_magique'] <= 89) 	{	$tmagie = 50 ;	}if ($line['E_magique'] >=90 AND $line['E_magique'] <= 104)	{	$tmagie = 60 ;	}if ($line['E_magique'] >=105 AND $line['E_magique'] <= 119)	{	$tmagie = 70 ;	}if ($line['E_magique'] >=120 AND $line['E_magique'] <= 134) {	$tmagie = 80 ;	}if ($line['E_magique'] >=135 AND $line['E_magique'] <= 149) {	$tmagie = 90 ;	}if ($line['E_magique'] == 150) 	{	$tmagie = 100 ;	}}if ($line['E_magique'] > 500) 	{	$tmagie = "over" ;	}
+	if ($line['magie_rank'] == 3) {if ($line['E_magique'] >= 0  AND $line['E_magique'] <= 19) 	{	$tmagie = 0 ;	}if ($line['E_magique'] >= 20 AND $line['E_magique'] <= 39) 	{	$tmagie = 10 ;	}if ($line['E_magique'] >= 40 AND $line['E_magique'] <= 59) 	{	$tmagie = 20 ;	}if ($line['E_magique'] >= 60 AND $line['E_magique'] <= 79) 	{	$tmagie = 30 ;	}if ($line['E_magique'] >= 80 AND $line['E_magique'] <= 99) 	{	$tmagie = 40 ;	}if ($line['E_magique'] >= 100 AND $line['E_magique'] <= 119) 	{	$tmagie = 50 ;	}if ($line['E_magique'] >= 120 AND $line['E_magique'] <= 139)	{	$tmagie = 60 ;	}if ($line['E_magique'] >= 140 AND $line['E_magique'] <= 159) 	{	$tmagie = 70 ;	}if ($line['E_magique'] >= 160 AND $line['E_magique'] <= 179) 	{	$tmagie = 80 ;	}if ($line['E_magique'] >= 180 AND $line['E_magique'] <= 199) 	{	$tmagie = 90 ;	}if ($line['E_magique'] == 200) 	{	$tmagie = 100 ;	}}if ($line['E_magique'] > 200) 	{	$tmagie = "over" ;	}
+	if ($line['magie_rank'] == 4) {if ($line['E_magique'] >= 0  AND $line['E_magique'] <= 29) 	{	$tmagie = 0 ;	}if ($line['E_magique'] >= 30 AND $line['E_magique'] <= 59) 	{	$tmagie = 10 ;	}if ($line['E_magique'] >= 60 AND $line['E_magique'] <= 89) 	{	$tmagie = 20 ;	}if ($line['E_magique'] >= 90 AND $line['E_magique'] <= 119) 	{	$tmagie = 30 ;	}if ($line['E_magique'] >= 120 AND $line['E_magique'] <= 149) 	{	$tmagie = 40 ;	}if ($line['E_magique'] >= 150 AND $line['E_magique'] <= 179) 	{	$tmagie = 50 ;	}if ($line['E_magique'] >= 180 AND $line['E_magique'] <= 209)	{	$tmagie = 60 ;	}if ($line['E_magique'] >= 210 AND $line['E_magique'] <= 239) 	{	$tmagie = 70 ;	}if ($line['E_magique'] >= 240 AND $line['E_magique'] <= 269) 	{	$tmagie = 80 ;	}if ($line['E_magique'] >= 270 AND $line['E_magique'] <= 299) 	{	$tmagie = 90 ;	}if ($line['E_magique'] == 300) 	{	$tmagie = 100 ;	}}if ($line['E_magique'] > 300) 	{	$tmagie = "over" ;	}
+	if ($line['magie_rank'] == 5) {if ($line['E_magique'] >= 0  AND $line['E_magique'] <= 39) 	{	$tmagie = 0 ;	}if ($line['E_magique'] >= 40 AND $line['E_magique'] <= 79) 	{	$tmagie = 10 ;	}if ($line['E_magique'] >= 80 AND $line['E_magique'] <= 119) 	{	$tmagie = 20 ;	}if ($line['E_magique'] >= 120 AND $line['E_magique'] <= 159) 	{	$tmagie = 30 ;	}if ($line['E_magique'] >= 160 AND $line['E_magique'] <= 199) 	{	$tmagie = 40 ;	}if ($line['E_magique'] >= 200 AND $line['E_magique'] <= 239) 	{	$tmagie = 50 ;	}if ($line['E_magique'] >= 240 AND $line['E_magique'] <= 279)	{	$tmagie = 60 ;	}if ($line['E_magique'] >= 280 AND $line['E_magique'] <= 319) 	{	$tmagie = 70 ;	}if ($line['E_magique'] >= 320 AND $line['E_magique'] <= 359) 	{	$tmagie = 80 ;	}if ($line['E_magique'] >= 360 AND $line['E_magique'] <= 399) 	{	$tmagie = 90 ;	}if ($line['E_magique'] == 400) 	{	$tmagie = 100 ;	}} if ($line['E_magique'] > 400) 	{	$tmagie = "over" ;	}
+	if ($line['magie_rank'] == 6) {if ($line['E_magique'] >= 0  AND $line['E_magique'] <= 49) 	{	$tmagie = 0 ;	}if ($line['E_magique'] >= 50 AND $line['E_magique'] <= 99) 	{	$tmagie = 10 ;	}if ($line['E_magique'] >= 100 AND $line['E_magique'] <= 149) 	{	$tmagie = 20 ;	}if ($line['E_magique'] >= 150 AND $line['E_magique'] <= 199) 	{	$tmagie = 30 ;	}if ($line['E_magique'] >= 200 AND $line['E_magique'] <= 249) 	{	$tmagie = 40 ;	}if ($line['E_magique'] >= 250 AND $line['E_magique'] <= 299) 	{	$tmagie = 50 ;	}if ($line['E_magique'] >= 300 AND $line['E_magique'] <= 349)	{	$tmagie = 60 ;	}if ($line['E_magique'] >= 350 AND $line['E_magique'] <= 399) 	{	$tmagie = 70 ;	}if ($line['E_magique'] >= 400 AND $line['E_magique'] <= 449) 	{	$tmagie = 80 ;	}if ($line['E_magique'] >= 450 AND $line['E_magique'] <= 499) 	{	$tmagie = 90 ;	}if ($line['E_magique'] == 500) 	{	$tmagie = 100 ;	}} if ($line['E_magique'] > 500) 	{	$tmagie = "over" ;	}
+	if ($line['magie_rank'] >= 7) { $tmagie = 'inf';}
+	if ($line['E_vitale'] >= 0  AND $line['E_vitale'] <= 19) 	{	$tvie = 0 ;	}if ($line['E_vitale'] >= 20 AND $line['E_vitale'] <= 39) 	{	$tvie = 10 ;	}if ($line['E_vitale'] >= 40 AND $line['E_vitale'] <= 59) 	{	$tvie = 20 ;	}if ($line['E_vitale'] >= 60 AND $line['E_vitale'] <= 79) 	{	$tvie = 30 ;	}if ($line['E_vitale'] >= 80 AND $line['E_vitale'] <= 99) 	{	$tvie = 40 ;	}if ($line['E_vitale'] >= 100 AND $line['E_vitale'] <= 119) 	{	$tvie = 50 ;	}if ($line['E_vitale'] >= 120 AND $line['E_vitale'] <= 139)	{	$tvie = 60 ;	}if ($line['E_vitale'] >= 140 AND $line['E_vitale'] <= 159) 	{	$tvie = 70 ;	}if ($line['E_vitale'] >= 160 AND $line['E_vitale'] <= 179) 	{	$tvie = 80 ;	}if ($line['E_vitale'] >= 180 AND $line['E_vitale'] <= 199) 	{	$tvie = 90 ;	}if ($line['E_vitale'] == 200) 	{	$tvie = 100 ;	}
+	?>
+	<tr class="memberbg_8">
+		<td><img class="magie_type" src="pics/<? echo $rank?>" width="27" alt="Grade MJ+" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
+		<td> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
+		<td style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
+		<td style="text-align: center;"><? echo $line3['fofo']?></td>
+		<td style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
+		<td style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
+		<td style="text-align: center;"><? echo $line2['sort']?></td>
+		<? if ($_SESSION["rank"] >= joueurp) {	?><td style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" class="magie_type" width="27" alt="Spécialisation : <?= ($line['specialisation'])?>" title="Spécialisation : <?= ($line['specialisation'])?>" /></td><? } ?>
+		<td style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
+	<td style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
+	<? if ($_SESSION["rank"] >= moderator) {	?>	<td style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td> <? } ?>
+	<td style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
+		
+	</tr>
+	<?php } ?>
+	
+	<tr class="member_top">
+		<th>Maîtres du jeu</th>
 		<th>Titre</th>
 		<th style="text-align: center;">BG</th>
 		<th style="text-align: center;">Msg.</th>
@@ -252,7 +319,7 @@
 		<? if ($_SESSION["rank"] >= 3) {	?><th style="text-align: center;">Spé'</th> <? } ?>
 		<th style="text-align: center;">Race</th>
 		<th style="text-align: center;">Cycle</th>
-	<? if ($_SESSION["rank"] >= 4) {	?>	<th style="text-align: center;">Inv'</th> <? } ?>
+		<? if ($_SESSION["rank"] >= 4) {	?><th style="text-align: center;">Inv'</th> <? } ?>
 		<th style="text-align: center;">E. Magique / E.Vitale</th>
 	</tr>
 	<?php while ($line = $answer->fetch()) { $filename = 'pics/avatar/miniskin_' .$line['id']. '.png';if (file_exists($filename)) {$skin = $line['id'];} else {$skin = 'no';}
@@ -277,41 +344,41 @@
 	if ($line['magie_rank'] >= 7) { $tmagie = 'inf';}
 	if ($line['E_vitale'] >= 0  AND $line['E_vitale'] <= 19) 	{	$tvie = 0 ;	}if ($line['E_vitale'] >= 20 AND $line['E_vitale'] <= 39) 	{	$tvie = 10 ;	}if ($line['E_vitale'] >= 40 AND $line['E_vitale'] <= 59) 	{	$tvie = 20 ;	}if ($line['E_vitale'] >= 60 AND $line['E_vitale'] <= 79) 	{	$tvie = 30 ;	}if ($line['E_vitale'] >= 80 AND $line['E_vitale'] <= 99) 	{	$tvie = 40 ;	}if ($line['E_vitale'] >= 100 AND $line['E_vitale'] <= 119) 	{	$tvie = 50 ;	}if ($line['E_vitale'] >= 120 AND $line['E_vitale'] <= 139)	{	$tvie = 60 ;	}if ($line['E_vitale'] >= 140 AND $line['E_vitale'] <= 159) 	{	$tvie = 70 ;	}if ($line['E_vitale'] >= 160 AND $line['E_vitale'] <= 179) 	{	$tvie = 80 ;	}if ($line['E_vitale'] >= 180 AND $line['E_vitale'] <= 199) 	{	$tvie = 90 ;	}if ($line['E_vitale'] == 200) 	{	$tvie = 100 ;	}
 	?>
-	<tr class="rank_cat">
-		<td class="member_MJplus"><img class="magie_type" src="pics/<? echo $rank?>" width="27" alt="Grade MJ+" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
-		<td class="member_MJplus"> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
-		<td class="member_MJplus" style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
-		<td class="member_MJplus" style="text-align: center;"><? echo $line3['fofo']?></td>
-		<td class="member_MJplus" style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
-		<td class="member_MJplus" style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
-		<td class="member_MJplus" style="text-align: center;"><? echo $line2['sort']?></td>
-		<? if ($_SESSION["rank"] >= 3) {	?><td class="member_MJplus" style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" class="magie_type" width="27" alt="Spécialisation : <?= ($line['specialisation'])?>" title="Spécialisation : <?= ($line['specialisation'])?>" /></td><? } ?>
-		<td class="member_MJplus" style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
-	<td class="member_MJplus" style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
-	<? if ($_SESSION["rank"] >= 4) {	?>	<td class="member_MJplus" style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td> <? } ?>
-	<td class="member_MJplus" style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
+	<tr class="memberbg_7">
+		<td><img class="magie_type" src="pics/<? echo $rank?>" width="27" alt="Grade MJ" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
+		<td> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
+		<td style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
+		<td style="text-align: center;"><? echo $line3['fofo']?></td>
+		<td style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
+		<td style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
+		<td style="text-align: center;"><? echo $line2['sort']?></td>
+		<? if ($_SESSION["rank"] >= joueurp) {	?><td style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" class="magie_type" width="27" alt="Spécialisation : <?= ($line['specialisation'])?>" title="Spécialisation : <?= ($line['specialisation'])?>" /></td><? } ?>
+		<td style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
+	<td style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
+	<? if ($_SESSION["rank"] >= moderator) {	?>	<td style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td> <? } ?>
+	<td style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
 		
 	</tr>
 	<?php } ?>
 	
-	<tr class="rank_cat">
-		<th>Maîtres du jeu</th>
+	<tr class="member_top">
+		<th>Modérateurs</th>
 		<th>Titre</th>
 		<th style="text-align: center;">BG</th>
 		<th style="text-align: center;">Msg.</th>
 		<th style="text-align: center;">Magie</th>
 		<th style="text-align: center;">Niv'</th>
 		<th style="text-align: center;">Sorts</th>
-		<? if ($_SESSION["rank"] >= 3) {	?><th style="text-align: center;">Spé'</th> <? } ?>
+		<? if ($_SESSION["rank"] >= joueurp) {	?><th style="text-align: center;">Spé'</th> <? } ?>
 		<th style="text-align: center;">Race</th>
 		<th style="text-align: center;">Cycle</th>
-		<? if ($_SESSION["rank"] >= 4) {	?><th style="text-align: center;">Inv'</th> <? } ?>
+		<? if ($_SESSION["rank"] >= moderator) {	?><th style="text-align: center;">Inv'</th> <? } ?>
 		<th style="text-align: center;">E. Magique / E.Vitale</th>
 	</tr>
 	<?php while ($line = $answer1->fetch()) { $filename = 'pics/avatar/miniskin_' .$line['id']. '.png';if (file_exists($filename)) {$skin = $line['id'];} else {$skin = 'no';}
 				$sorts = $db->query("SELECT COUNT(*) AS sort FROM incan_get WHERE incan_get.user_id =".$line['id'].""); $line2 = $sorts->fetch();
 				$fofo = $db->query("SELECT COUNT(*) AS fofo FROM forum_post WHERE forum_post.user_id =".$line['id'].""); $line3 = $fofo->fetch();
-				switch ($line ["valid_bg"]) {	case 1: $valid_bg= "on" ; $bgtitle ="BackGround RP Validé par le Staff"; break; case 0: $valid_bg= "off" ; $bgtitle ="BG en cours d'écriture"; break;		}
+				switch ($line ["valid_bg"]) {	case 1: $valid_bg= "on" ; $bgtitle ="BackGround RP Validé par le Staff"; break; case 0: $valid_bg= "off" ; $bgtitle ="BG en cours d'écriture"; break;	}
 				switch ($line ["magieok"])  {	case 1: $magieok= "on" ; $magietitle= "Magie maitrisée"; break; case 0: $magieok= "off" ; $magietitle= "Magie Non maitrisée"; break;		}
 				switch ($line ["invisible"])  {	case 1: $vanish= "on" ; $title= "Inv"; break; case 0: $vanish= "off" ; $title= "V"; break;		}
 				switch ($line ["magie_rank"]) { case 0: $mrank= "Profane"; break; case 1: $mrank= "Adepte"; break; case 2: $mrank= "Apprenti Magicien"; break; case 3: $mrank= "Magicien"; break; case 4: $mrank= "Mage"; break; case 5: $mrank= "Archimage"; break; case  6: $mrank= "Sage"; break; case 7: $mrank= "Dieu"; break; case 8: $mrank="Titan"; case 9: $mrank="Niveau Suprême"; break;}
@@ -330,42 +397,42 @@
 	if ($line['magie_rank'] >= 7) { $tmagie = 'inf';}
 	if ($line['E_vitale'] >= 0  AND $line['E_vitale'] <= 19) 	{	$tvie = 0 ;	}if ($line['E_vitale'] >= 20 AND $line['E_vitale'] <= 39) 	{	$tvie = 10 ;	}if ($line['E_vitale'] >= 40 AND $line['E_vitale'] <= 59) 	{	$tvie = 20 ;	}if ($line['E_vitale'] >= 60 AND $line['E_vitale'] <= 79) 	{	$tvie = 30 ;	}if ($line['E_vitale'] >= 80 AND $line['E_vitale'] <= 99) 	{	$tvie = 40 ;	}if ($line['E_vitale'] >= 100 AND $line['E_vitale'] <= 119) 	{	$tvie = 50 ;	}if ($line['E_vitale'] >= 120 AND $line['E_vitale'] <= 139)	{	$tvie = 60 ;	}if ($line['E_vitale'] >= 140 AND $line['E_vitale'] <= 159) 	{	$tvie = 70 ;	}if ($line['E_vitale'] >= 160 AND $line['E_vitale'] <= 179) 	{	$tvie = 80 ;	}if ($line['E_vitale'] >= 180 AND $line['E_vitale'] <= 199) 	{	$tvie = 90 ;	}if ($line['E_vitale'] == 200) 	{	$tvie = 100 ;	}
 	?>
-	<tr class="rank_cat">
-		<td class="member_MJ"><img class="magie_type" src="pics/<? echo $rank?>" width="27" alt="Grade MJ" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
-		<td class="member_MJ"> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
-		<td class="member_MJ" style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
-		<td class="member_MJ" style="text-align: center;"><? echo $line3['fofo']?></td>
-		<td class="member_MJ" style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
-		<td class="member_MJ" style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
-		<td class="member_MJ" style="text-align: center;"><? echo $line2['sort']?></td>
-		<? if ($_SESSION["rank"] >= 3) {	?><td class="member_MJ" style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" class="magie_type" width="27" alt="Spécialisation : <?= ($line['specialisation'])?>" title="Spécialisation : <?= ($line['specialisation'])?>" /></td><? } ?>
-		<td class="member_MJ" style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
-	<td class="member_MJ" style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
-	<? if ($_SESSION["rank"] >= 4) {	?>	<td class="member_MJ" style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td> <? } ?>
-	<td class="member_MJ" style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
-		
+	<tr class="memberbg_6">
+		<td><img class="magie_type" src="pics/<? echo $rank?>" width="27" alt="Grade Modo" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
+		<td> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
+		<td style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
+		<td style="text-align: center;"><? echo $line3['fofo']?></td>
+		<td style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
+		<td style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
+		<td style="text-align: center;"><? echo $line2['sort']?></td>
+		<? if ($_SESSION["rank"] >= joueurp) {	?><td style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" class="magie_type" width="27" alt="Spécialisation : <?= ($line['specialisation'])?>" title="Spécialisation : <?= ($line['specialisation'])?>" /></td><? } ?>
+		<td style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
+		<td style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
+		<? if ($_SESSION["rank"] >= moderator) {	?> <td style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td> <? } ?>
+		<td style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
 	</tr>
 	<?php } ?>
+
 	
-	<tr class="rank_cat">
-		<th>Modérateurs</th>
+	<tr class="member_top">
+		<th>Encadrants</th>
 		<th>Titre</th>
 		<th style="text-align: center;">BG</th>
 		<th style="text-align: center;">Msg.</th>
 		<th style="text-align: center;">Magie</th>
 		<th style="text-align: center;">Niv'</th>
 		<th style="text-align: center;">Sorts</th>
-		<? if ($_SESSION["rank"] >= 3) {	?><th style="text-align: center;">Spé'</th> <? } ?>
+		<? if ($_SESSION["rank"] >= joueurp) {	?><th style="text-align: center;">Spé'</th> <? } ?>
 		<th style="text-align: center;">Race</th>
 		<th style="text-align: center;">Cycle</th>
-		<? if ($_SESSION["rank"] >= 4) {	?><th style="text-align: center;">Inv'</th> <? } ?>
+		<? if ($_SESSION["rank"] >= moderator) {	?><th style="text-align: center;">Inv'</th> <? } ?>
 		<th style="text-align: center;">E. Magique / E.Vitale</th>
 	</tr>
 	<?php while ($line = $answer2->fetch()) { $filename = 'pics/avatar/miniskin_' .$line['id']. '.png';if (file_exists($filename)) {$skin = $line['id'];} else {$skin = 'no';}
 				$sorts = $db->query("SELECT COUNT(*) AS sort FROM incan_get WHERE incan_get.user_id =".$line['id'].""); $line2 = $sorts->fetch();
 				$fofo = $db->query("SELECT COUNT(*) AS fofo FROM forum_post WHERE forum_post.user_id =".$line['id'].""); $line3 = $fofo->fetch();
-				switch ($line ["valid_bg"]) {	case 1: $valid_bg= "on" ; $bgtitle ="BackGround RP Validé par le Staff"; break; case 0: $valid_bg= "off" ; $bgtitle ="BG en cours d'écriture"; break;	}
-				switch ($line ["magieok"])  {	case 1: $magieok= "on" ; $magietitle= "Magie maitrisée"; break; case 0: $magieok= "off" ; $magietitle= "Magie Non maitrisée"; break;		}
+				switch ($line ["valid_bg"]) {	case 1: $valid_bg= "on" ; $bgtitle ="BackGround RP Validé par le Staff"; break; case 0: $valid_bg= "off" ; $bgtitle ="BG en cours d'écriture"; break;			}
+				switch ($line ["magieok"])  {	case 1: $magieok= "on" ; $magietitle= "Magie maitrisée"; break; case 0: $magieok= "off" ; $magietitle= "Magie Non maitrisée"; break;	}
 				switch ($line ["invisible"])  {	case 1: $vanish= "on" ; $title= "Inv"; break; case 0: $vanish= "off" ; $title= "V"; break;		}
 				switch ($line ["magie_rank"]) { case 0: $mrank= "Profane"; break; case 1: $mrank= "Adepte"; break; case 2: $mrank= "Apprenti Magicien"; break; case 3: $mrank= "Magicien"; break; case 4: $mrank= "Mage"; break; case 5: $mrank= "Archimage"; break; case  6: $mrank= "Sage"; break; case 7: $mrank= "Dieu"; break; case 8: $mrank="Titan"; case 9: $mrank="Niveau Suprême"; break;}
 					switch ($line['hardcore']) { case 0: $cycle= "Rem" ; break; case 1: $cycle= "M"; break;}
@@ -383,34 +450,35 @@
 	if ($line['magie_rank'] >= 7) { $tmagie = 'inf';}
 	if ($line['E_vitale'] >= 0  AND $line['E_vitale'] <= 19) 	{	$tvie = 0 ;	}if ($line['E_vitale'] >= 20 AND $line['E_vitale'] <= 39) 	{	$tvie = 10 ;	}if ($line['E_vitale'] >= 40 AND $line['E_vitale'] <= 59) 	{	$tvie = 20 ;	}if ($line['E_vitale'] >= 60 AND $line['E_vitale'] <= 79) 	{	$tvie = 30 ;	}if ($line['E_vitale'] >= 80 AND $line['E_vitale'] <= 99) 	{	$tvie = 40 ;	}if ($line['E_vitale'] >= 100 AND $line['E_vitale'] <= 119) 	{	$tvie = 50 ;	}if ($line['E_vitale'] >= 120 AND $line['E_vitale'] <= 139)	{	$tvie = 60 ;	}if ($line['E_vitale'] >= 140 AND $line['E_vitale'] <= 159) 	{	$tvie = 70 ;	}if ($line['E_vitale'] >= 160 AND $line['E_vitale'] <= 179) 	{	$tvie = 80 ;	}if ($line['E_vitale'] >= 180 AND $line['E_vitale'] <= 199) 	{	$tvie = 90 ;	}if ($line['E_vitale'] == 200) 	{	$tvie = 100 ;	}
 	?>
-	<tr class="rank_cat">
-		<td class="member_Modo"><img class="magie_type" src="pics/<? echo $rank?>" width="27" alt="Grade Modo" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
-		<td class="member_Modo"> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
-		<td class="member_Modo" style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
-		<td class="member_Modo" style="text-align: center;"><? echo $line3['fofo']?></td>
-		<td class="member_Modo" style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
-		<td class="member_Modo" style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
-		<td class="member_Modo" style="text-align: center;"><? echo $line2['sort']?></td>
-		<? if ($_SESSION["rank"] >= 3) {	?><td class="member_Modo" style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" class="magie_type" width="27" alt="Spécialisation : <?= ($line['specialisation'])?>" title="Spécialisation : <?= ($line['specialisation'])?>" /></td><? } ?>
-		<td class="member_Modo" style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
-		<td class="member_Modo" style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
-		<? if ($_SESSION["rank"] >= 4) {	?> <td class="member_Modo" style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td> <? } ?>
-		<td class="member_Modo" style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
+	<tr class="memberbg_5">
+		<td><img class="magie_type" src="pics/<? echo $rank?>" width="27"  alt="Grade J+" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
+		<td> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
+		<td style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
+		<td style="text-align: center;"><? echo $line3['fofo']?></td>
+		<td style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
+		<td style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
+		<td style="text-align: center;"><? echo $line2['sort']?></td>
+		<? if ($_SESSION["rank"] >= joueurp) {	?><td style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" class="magie_type" width="27" alt="Spécialisation : <?= ($line['specialisation'])?>" title="Spécialisation : <?= ($line['specialisation'])?>" /></td><? } ?>
+		<td style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
+		<td style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
+	<? if ($_SESSION["rank"] >= moderator) {	?> <td style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td> <? } ?>
+	<td style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
 	</tr>
 	<?php } ?>
-
-	<tr class="rank_cat">
-		<th>Joueurs actifs</th>
+	
+	
+	<tr class="member_top">
+		<th>Joueurs Investis</th>
 		<th>Titre</th>
 		<th style="text-align: center;">BG</th>
 		<th style="text-align: center;">Msg.</th>
 		<th style="text-align: center;">Magie</th>
 		<th style="text-align: center;">Niv'</th>
 		<th style="text-align: center;">Sorts</th>
-		<? if ($_SESSION["rank"] >= 3) {	?><th style="text-align: center;">Spé'</th> <? } ?>
+		<? if ($_SESSION["rank"] >= joueurp) {	?><th style="text-align: center;">Spé'</th> <? } ?>
 		<th style="text-align: center;">Race</th>
 		<th style="text-align: center;">Cycle</th>
-		<? if ($_SESSION["rank"] >= 4) {	?><th style="text-align: center;">Inv'</th> <? } ?>
+		<? if ($_SESSION["rank"] >= moderator) {	?><th style="text-align: center;">Inv'</th> <? } ?>
 		<th style="text-align: center;">E. Magique / E.Vitale</th>
 	</tr>
 	<?php while ($line = $answer3->fetch()) { $filename = 'pics/avatar/miniskin_' .$line['id']. '.png';if (file_exists($filename)) {$skin = $line['id'];} else {$skin = 'no';}
@@ -435,23 +503,23 @@
 	if ($line['magie_rank'] >= 7) { $tmagie = 'inf';}
 	if ($line['E_vitale'] >= 0  AND $line['E_vitale'] <= 19) 	{	$tvie = 0 ;	}if ($line['E_vitale'] >= 20 AND $line['E_vitale'] <= 39) 	{	$tvie = 10 ;	}if ($line['E_vitale'] >= 40 AND $line['E_vitale'] <= 59) 	{	$tvie = 20 ;	}if ($line['E_vitale'] >= 60 AND $line['E_vitale'] <= 79) 	{	$tvie = 30 ;	}if ($line['E_vitale'] >= 80 AND $line['E_vitale'] <= 99) 	{	$tvie = 40 ;	}if ($line['E_vitale'] >= 100 AND $line['E_vitale'] <= 119) 	{	$tvie = 50 ;	}if ($line['E_vitale'] >= 120 AND $line['E_vitale'] <= 139)	{	$tvie = 60 ;	}if ($line['E_vitale'] >= 140 AND $line['E_vitale'] <= 159) 	{	$tvie = 70 ;	}if ($line['E_vitale'] >= 160 AND $line['E_vitale'] <= 179) 	{	$tvie = 80 ;	}if ($line['E_vitale'] >= 180 AND $line['E_vitale'] <= 199) 	{	$tvie = 90 ;	}if ($line['E_vitale'] == 200) 	{	$tvie = 100 ;	}
 	?>
-	<tr class="rank_cat">
-		<td class="member_Joueurplus"><img class="magie_type" src="pics/<? echo $rank?>" width="27"  alt="Grade J+" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
-		<td class="member_Joueurplus"> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
-		<td class="member_Joueurplus" style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
-		<td class="member_Joueurplus" style="text-align: center;"><? echo $line3['fofo']?></td>
-		<td class="member_Joueurplus" style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
-		<td class="member_Joueurplus" style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
-		<td class="member_Joueurplus" style="text-align: center;"><? echo $line2['sort']?></td>
-		<? if ($_SESSION["rank"] >= 3) {	?><td class="member_Joueurplus" style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" class="magie_type" width="27" alt="Spécialisation : <?= ($line['specialisation'])?>" title="Spécialisation : <?= ($line['specialisation'])?>" /></td><? } ?>
-		<td class="member_Joueurplus" style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
-		<td class="member_Joueurplus" style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
-	<? if ($_SESSION["rank"] >= 4) {	?> <td class="member_Joueurplus" style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td> <? } ?>
-	<td class="member_Joueurplus" style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
+	<tr class="memberbg_4">
+		<td><img class="magie_type" src="pics/<? echo $rank?>" width="27"  alt="Grade J+" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
+		<td> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
+		<td style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
+		<td style="text-align: center;"><? echo $line3['fofo']?></td>
+		<td style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
+		<td style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
+		<td style="text-align: center;"><? echo $line2['sort']?></td>
+		<? if ($_SESSION["rank"] >= joueurp) {	?><td style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" class="magie_type" width="27" alt="Spécialisation : <?= ($line['specialisation'])?>" title="Spécialisation : <?= ($line['specialisation'])?>" /></td><? } ?>
+		<td style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
+		<td style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
+	<? if ($_SESSION["rank"] >= moderator) {	?> <td style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td> <? } ?>
+	<td style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
 	</tr>
 	<?php } ?>
 	
-	<tr class="rank_cat">
+	<tr class="member_top">
 		<th>Joueurs</th>
 		<th>Titre</th>
 		<th style="text-align: center;">BG</th>
@@ -459,10 +527,10 @@
 		<th style="text-align: center;">Magie</th>
 		<th style="text-align: center;">Niv'</th>
 		<th style="text-align: center;">Sorts</th>
-		<? if ($_SESSION["rank"] >= 3) {	?><th style="text-align: center;">Spé'</th> <? } ?>
+		<? if ($_SESSION["rank"] >= joueurp) {	?><th style="text-align: center;">Spé'</th> <? } ?>
 		<th style="text-align: center;">Race</th>
 		<th style="text-align: center;">Cycle</th>
-		<? if ($_SESSION["rank"] >= 4) {	?><th style="text-align: center;">Inv'</th> <? } ?>
+		<? if ($_SESSION["rank"] >= moderator) {	?><th style="text-align: center;">Inv'</th> <? } ?>
 		<th style="text-align: center;">E. Magique / E.Vitale</th>
 	</tr>
 	<?php while ($line = $answer4->fetch()) { $filename = 'pics/avatar/miniskin_' .$line['id']. '.png';if (file_exists($filename)) {$skin = $line['id'];} else {$skin = 'no';}
@@ -487,23 +555,23 @@
 	if ($line['magie_rank'] >= 7) { $tmagie = 'inf';}
 	if ($line['E_vitale'] >= 0  AND $line['E_vitale'] <= 19) 	{	$tvie = 0 ;	}if ($line['E_vitale'] >= 20 AND $line['E_vitale'] <= 39) 	{	$tvie = 10 ;	}if ($line['E_vitale'] >= 40 AND $line['E_vitale'] <= 59) 	{	$tvie = 20 ;	}if ($line['E_vitale'] >= 60 AND $line['E_vitale'] <= 79) 	{	$tvie = 30 ;	}if ($line['E_vitale'] >= 80 AND $line['E_vitale'] <= 99) 	{	$tvie = 40 ;	}if ($line['E_vitale'] >= 100 AND $line['E_vitale'] <= 119) 	{	$tvie = 50 ;	}if ($line['E_vitale'] >= 120 AND $line['E_vitale'] <= 139)	{	$tvie = 60 ;	}if ($line['E_vitale'] >= 140 AND $line['E_vitale'] <= 159) 	{	$tvie = 70 ;	}if ($line['E_vitale'] >= 160 AND $line['E_vitale'] <= 179) 	{	$tvie = 80 ;	}if ($line['E_vitale'] >= 180 AND $line['E_vitale'] <= 199) 	{	$tvie = 90 ;	}if ($line['E_vitale'] == 200) 	{	$tvie = 100 ;	}
 	?>
-	<tr class="rank_cat">
-		<td class="member_Joueur"><img class="magie_type" src="pics/<? echo $rank?>" width="27" alt="Grade Joueurs" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
-		<td class="member_Joueur"> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
-		<td class="member_Joueur" style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
-		<td class="member_Joueur" style="text-align: center;"><? echo $line3['fofo']?></td>
-		<td class="member_Joueur" style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
-		<td class="member_Joueur" style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
-		<td class="member_Joueur" style="text-align: center;"><? echo $line2['sort']?></td>
-		<? if ($_SESSION["rank"] >= 3) {	?><td class="member_Joueur" style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" class="magie_type" width="27" alt="Spécialisation : <?= ($line['specialisation'])?>" title="Spécialisation : <?= ($line['specialisation'])?>" /></td><? } ?>
-		<td class="member_Joueur" style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
-		<td class="member_Joueur" style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
-	<? if ($_SESSION["rank"] >= 4) {	?> <td class="member_Joueur" style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td> <? } ?>
-	<td class="member_Joueur" style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
+	<tr class="memberbg_3">
+		<td><img class="magie_type" src="pics/<? echo $rank?>" width="27" alt="Grade Joueurs" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
+		<td> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
+		<td style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
+		<td style="text-align: center;"><? echo $line3['fofo']?></td>
+		<td style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
+		<td style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
+		<td style="text-align: center;"><? echo $line2['sort']?></td>
+		<? if ($_SESSION["rank"] >= joueurp) {	?><td style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" class="magie_type" width="27" alt="Spécialisation : <?= ($line['specialisation'])?>" title="Spécialisation : <?= ($line['specialisation'])?>" /></td><? } ?>
+		<td style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
+		<td style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
+	<? if ($_SESSION["rank"] >= moderator) {	?> <td style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td> <? } ?>
+	<td style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
 	</tr>
 	<?php } ?>
 	
-	<tr class="rank_cat">
+	<tr class="member_top">
 		<th>Nouveaux</th>
 		<th>Titre</th>
 		<th style="text-align: center;">BG</th>
@@ -511,10 +579,10 @@
 		<th style="text-align: center;">Magie</th>
 		<th style="text-align: center;">Niv'</th>
 		<th style="text-align: center;">Sorts</th>
-		<? if ($_SESSION["rank"] >= 3) {	?><th style="text-align: center;">Spé'</th><? } ?>
+		<? if ($_SESSION["rank"] >= joueurp) {	?><th style="text-align: center;">Spé'</th><? } ?>
 		<th style="text-align: center;">Race</th>
 		<th style="text-align: center;">Cycle</th>
-		<? if ($_SESSION["rank"] >= 4) {	?><th style="text-align: center;">Inv'</th> <? } ?>
+		<? if ($_SESSION["rank"] >= moderator) {	?><th style="text-align: center;">Inv'</th> <? } ?>
 		<th style="text-align: center;">E. Magique / E.Vitale</th>
 	</tr>
 	<?php while ($line = $answer5->fetch()) { $filename = 'pics/avatar/miniskin_' .$line['id']. '.png';if (file_exists($filename)) {$skin = $line['id'];} else {$skin = 'no';}
@@ -539,19 +607,19 @@
 	if ($line['magie_rank'] >= 7) { $tmagie = 'inf';}
 	if ($line['E_vitale'] >= 0  AND $line['E_vitale'] <= 19) 	{	$tvie = 0 ;	}if ($line['E_vitale'] >= 20 AND $line['E_vitale'] <= 39) 	{	$tvie = 10 ;	}if ($line['E_vitale'] >= 40 AND $line['E_vitale'] <= 59) 	{	$tvie = 20 ;	}if ($line['E_vitale'] >= 60 AND $line['E_vitale'] <= 79) 	{	$tvie = 30 ;	}if ($line['E_vitale'] >= 80 AND $line['E_vitale'] <= 99) 	{	$tvie = 40 ;	}if ($line['E_vitale'] >= 100 AND $line['E_vitale'] <= 119) 	{	$tvie = 50 ;	}if ($line['E_vitale'] >= 120 AND $line['E_vitale'] <= 139)	{	$tvie = 60 ;	}if ($line['E_vitale'] >= 140 AND $line['E_vitale'] <= 159) 	{	$tvie = 70 ;	}if ($line['E_vitale'] >= 160 AND $line['E_vitale'] <= 179) 	{	$tvie = 80 ;	}if ($line['E_vitale'] >= 180 AND $line['E_vitale'] <= 199) 	{	$tvie = 90 ;	}if ($line['E_vitale'] == 200) 	{	$tvie = 100 ;	}
 	?>
-	<tr class="rank_cat">
-		<td class="member_Nouveau"><img class="magie_type" src="pics/<? echo $rank?>" width="27" alt="Grade Nouveaux" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
-		<td class="member_Nouveau"> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
-		<td class="member_Nouveau" style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
-		<td class="member_Nouveau" style="text-align: center;"><? echo $line3['fofo']?></td>
-		<td class="member_Nouveau" style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
-		<td class="member_Nouveau" style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
-		<td class="member_Nouveau" style="text-align: center;"><? echo $line2['sort']?></td>
-		<? if ($_SESSION["rank"] >= 3) {	?><td class="member_Nouveau" style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" width="27" class="magie_type" alt="Spécialisation : <?= ($line['specialisation'])?>" title="Spécialisation : <?= ($line['specialisation'])?>" /></td><? } ?>
-		<td class="member_Nouveau" style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
-		<td class="member_Nouveau" style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
-		<? if ($_SESSION["rank"] >= 4) {	?> <td class="member_Nouveau" style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td> <? } ?>
-		<td class="member_Nouveau" style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
+	<tr class="memberbg_2">
+		<td><img class="magie_type" src="pics/<? echo $rank?>" width="27" alt="Grade Nouveaux" /> <img src="pics/avatar/miniskin_<? echo $skin?>.png" width="20px" /> <a href="index.php?p=viewmember&amp;perso=<?= $line['id']?>" title="Nom Minecraft : <?= $line["Minecraft_Account"]?>" ><?= $line['name']?></a></td>
+		<td> <? if ($line['pionier'] == 1) { echo "Pionier";} else { echo $line['title'] ;}?></td>
+		<td style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="Image du BG Vildé ou non" title="<? echo $bgtitle ?>" /></td>
+		<td style="text-align: center;"><? echo $line3['fofo']?></td>
+		<td style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="Image de la Magie Activée ou non." title="<? echo $magietitle?>" /></td>
+		<td style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
+		<td style="text-align: center;"><? echo $line2['sort']?></td>
+		<? if ($_SESSION["rank"] >= joueurp) {	?><td style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" width="27" class="magie_type" alt="Spécialisation : <?= ($line['specialisation'])?>" title="Spécialisation : <?= ($line['specialisation'])?>" /></td><? } ?>
+		<td style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
+		<td style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="Cycle de <? echo $cycle ?>ortalité" title="<? echo $cycle ?>ortel" /></td>
+		<? if ($_SESSION["rank"] >= moderator) {	?> <td style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="Activation du mode Invisible" title="<? echo $title ?>isible" /></td> <? } ?>
+		<td style="text-align: center;"><img src="includes/img/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="Energie Magique" /><br /><img src="includes/img/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="Energie Magique" /></td>
 	</tr>
 	<?php } ?>
 	
