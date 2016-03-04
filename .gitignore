@@ -1,6 +1,6 @@
 #Exclude directories
 tests/**
-ressourcepack/**
+resourcepack/**
 
 #Exclude files wich end by a ~ (gedit) and a .swp (vim)
 *[~]
