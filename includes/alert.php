@@ -9,7 +9,7 @@
 		if ($_SESSION['alertEmail'] && $page != 'a')
 		{
 			?>
-			<section class="alert">Vous n'avez pas encore activé votre adresse e-mail. Pour le faire, cliquez sur le lien dans votre e-mail d'inscription.</section>
+			<div class="alert">Vous n'avez pas encore activé votre adresse e-mail. Pour le faire, cliquez sur le lien dans votre e-mail d'inscription.</div>
 			<?php
 		}
 
@@ -18,11 +18,11 @@
 			$end = ($_SESSION['alertNewMsgs'] > 1)?'s':'';
 			$endx = ($_SESSION['alertNewMsgs'] > 1)?'x':'';
 			?>
-			<section class="alert">
+			<div class="alert">
 				<h4>Nouveau<?= $endx?> message<?=$end?></h4>
 				<p>Vous avez <?= $_SESSION['alertNewMsgs']?> nouveau<?= $endx?> message<?= $end?>.
 				Pour le<?= $end?> consulter, <a href="index.php?p=pm">cliquez ici.</a></p>
-			</section>
+			</div>
 			<?php
 		}
 	}

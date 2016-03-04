@@ -1,7 +1,6 @@
 <?php function showPage ()
 {
-	define('rank_cbm', 3);
-
+	
 	global $db, $_POST, $_GET, $_SESSION;
 
 	$answer = $db->query("SELECT * FROM members");
@@ -56,11 +55,11 @@
 											<p>Certaines fonctionnalités du site sont encore en cours d'élaboration, RPNix n'en est qu'à la version bêta mais reste tout de même libre d'entrée !<br />
 											Vous pouvez toujours vous tenir au courant des mises à jour à venir ou des fonctions futures auprès des membres du Staff concernés !</p>
 										</div>
-										<div class="alert">
+										
 											<?php 
 												include('includes/alert.php'); 		alert();
 											?>
-										</div>
+										
 										
 										<!--<? 
 										if ($_SESSION['E_magique'] <= 30 AND $_SESSION['E_magique'] > 0){ ?>

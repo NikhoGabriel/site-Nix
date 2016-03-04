@@ -1,6 +1,9 @@
-* {
-  font-family: 'Minecraftia';
+@font-face {
+    font-family: minecraft;
+    src: url('minecraft.ttf');
 }
+
+* { font-family:"minecraft"; }
 
 /* element généraux */
 
@@ -31,6 +34,11 @@ a
 {
 	text-decoration: none;
 	color: #000000;
+}
+
+a:hover
+{
+	color: #ffffff;
 }
 
 em
@@ -139,4 +147,338 @@ li.navbg:hover {
     position: relative;
     width: auto;
 	margin-left: 10px;
+}
+
+/* Classes relatives aux membres */
+
+#member tr
+{
+	border-color: #3a3a3a;
+	border-style: solid;
+	border-width: 2px;
+}
+
+.member_top
+{
+	background-color: #8a8aa3;
+}
+
+.memberbg_10
+{
+	background-color: #101010;
+	color: #ffffff;
+}
+
+.memberbg_9	{	background-color: #202020;	}
+.memberbg_8	{	background-color: #303030;	}
+.memberbg_7	{	background-color: #404040;	}
+.memberbg_pnj {	background-color: #505050;	}
+.memberbg_6	{	background-color: #606060;	}
+.memberbg_5	{	background-color: #707070;	}
+.memberbg_4	{	background-color: #808080;	}
+.memberbg_3	{	background-color: #909090;	}
+.memberbg_2	{	background-color: #a0a0a0;	}
+.memberbg_1	{	background-color: #b0b0b0;	}
+.memberbg_0	{	background-color: #c0b0c0;	}
+
+/* Classes relatives à la Frise Chrono' */
+
+.chrono0
+{
+	background-color : #9932CC;
+	text-align: center;
+	padding: 20px;
+	margin: 20px;
+}
+
+.chrono1
+{
+	background-color : #DAA520;
+	text-align: center;
+	padding: 20px;
+	margin: 20px;
+}
+
+.chrono2
+{
+	background-color : #FFD700;
+	text-align: center;
+	padding: 20px;
+	margin: 20px;
+}
+
+.chrono3
+{
+	background-color : #800000;
+	text-align: center;
+	padding: 20px;
+	margin: 20px;
+}
+
+.chrono4
+{
+	background-color : #FA8072;
+	text-align: center;
+	padding: 20px;
+	margin: 20px;
+}
+
+.chrono5
+{
+	background-color : #2E8B57;
+	text-align: center;
+	padding: 20px;
+	margin: 20px;
+}
+
+/* Classes relatives aux forums */
+
+.forumrank0		{	background-color: rgba(0, 0, 0, 0.0);	}
+.forumrank1		{	background-color: rgba(0, 0, 0, 0.1);	}
+.forumrank2		{	background-color: rgba(0, 0, 0, 0.2);	}
+.forumrank3		{	background-color: rgba(0, 0, 0, 0.3);	}
+.forumrank4		{	background-color: rgba(0, 0, 0, 0.4);	}
+.forumrank5		{	background-color: rgba(0, 0, 0, 0.5);	}
+.forumrank6		{	background-color: rgba(0, 0, 0, 0.6);	}
+.forumrank7		{	background-color: rgba(0, 0, 0, 0.7);	}
+.forumrank8		{	background-color: rgba(0, 0, 0, 0.8);	}
+.forumrank9		{	background-color: rgba(0, 0, 0, 0.9);	}
+.forumrank10	{	background-color: rgba(0, 0, 0, 1);		}
+
+/* Classes sur la magie */
+.magie			{	border-radius: 10px;	}
+.magie_tab		{	padding-left: 10%; padding-right: 10%; }
+.magie_type		{	border-radius:50%;		}
+
+/* Classes sur les forums */
+
+#forum {
+	width: 100%;
+	margin: auto;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+.forumrank0		{	background-color: rgba(0, 0, 0, 0.0);	}
+.forumrank1		{	background-color: rgba(0, 0, 0, 0.1);	}
+.forumrank2		{	background-color: rgba(0, 0, 0, 0.2);	}
+.forumrank3		{	background-color: rgba(0, 0, 0, 0.3);	}
+.forumrank4		{	background-color: rgba(0, 0, 0, 0.4);	}
+.forumrank5		{	background-color: rgba(0, 0, 0, 0.5);	}
+.forumrank6		{	background-color: rgba(0, 0, 0, 0.6);	}
+.forumrank7		{	background-color: rgba(0, 0, 0, 0.7);	}
+.forumrank8		{	background-color: rgba(0, 0, 0, 0.8);	}
+.forumrank9		{	background-color: rgba(0, 0, 0, 0.9);	}
+.forumrank10	{	background-color: rgba(0, 0, 0, 1);		}
+
+#categories 	
+{
+	
+	border: 2px solid #2d2d2d;
+	margin-left: 0;
+	padding-left: 0;
+	background-color: #808080;
+	list-style-type: none;
+}
+
+#categories .head_table 	{	background-color: #ACBCE0;			}
+#categories .last_post 	{	width: 25%;							}
+#categories table			{	padding-left: 15px;					}
+#categories th 			{	text-align: left;					}
+.unread					{	background-color: #adadad;			}
+.forum tr td	
+{
+	border-bottom: 2px solid #2d2d2d;
+	border-left: 2px solid #2d2d2d;
+	padding : 5px;
+}
+
+.forum_category {
+	margin-bottom: 20px;
+	background-color: #6d6d6d;
+	width: 100%;
+	border-collapse: collapse;
+	border: 2px solid #2d2d2d;
+}
+
+#forum td {
+	border: 2px solid #666666;
+	padding: 10px;
+}
+#forum p {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.post_aside {
+	width: 20%;
+	vertical-align: top;
+}
+#add_post {
+	width: 70%;
+	margin: auto;
+	margin-top: 20px;
+}
+
+textarea {
+	width: 400px;
+	height: 150px;
+}
+
+
+/* Utilitaires */
+
+.del_form {
+	display: inline;
+}
+.del_button {
+	border: none;
+	color: red;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.name0 {
+	font-weight: bold;
+	font-size: 1.1em;
+	color: #404040;
+	text-shadow: 2px 2px 2px #000000;
+}
+
+.name1 {
+	font-weight: bold;
+	font-size: 1.1em;
+	color: #000000;
+	text-shadow: 2px 2px 2px #000000;
+}
+
+.name2 {
+	font-weight: bold;
+	font-size: 1.1em;
+	color: #00CCFF;
+	text-shadow: 2px 2px 2px #000000;
+}
+
+.name3 {
+	font-weight: bold;
+	font-size: 1.1em;
+	color: #008B8B;
+	text-shadow: 2px 2px 2px #000000;
+}
+
+.name4 {
+	font-weight: bold;
+	font-size: 1.1em;
+	color: #0000cc;
+	text-shadow: 2px 2px 2px #000000;
+}
+
+.name5 {
+	font-weight: bold;
+	font-size: 1.1em;
+	color: #009900;
+	text-shadow: 2px 2px 2px #000000;
+}
+
+.name6 {
+	font-weight: bold;
+	font-size: 1.1em;
+	color: #FF6666;
+	text-shadow: 2px 2px 2px #000000;
+}
+
+.name7 {
+	font-weight: bold;
+	font-size: 1.1em;
+	color: #FF0000;
+	text-shadow: 2px 2px 2px #000000;
+}
+
+.name8 {
+	font-weight: bold;
+	font-size: 1.1em;
+	color: #FFFF00;
+	text-shadow: 2px 2px 2px #000000;
+}
+
+.name9 {
+	font-weight: bold;
+	font-size: 1.1em;
+	color: #FF6600;
+	text-shadow: 2px 2px 2px #000000;
+}
+
+.name10 {
+	font-weight: bold;
+	font-size: 1.1em;
+	color: #6600FF;
+	text-shadow: 2px 2px 2px #000000;
+}
+
+.name0-P , .name1-P , .name2-P, .name3-P, .name4-P, .name5-P, .name6-P, .name7-P, .name8-P, .name9-P, .name10-P,
+.name0-T-P , .name1-T-P , .name2-T-P, .name3-T-P, .name4-T-P, .name5-T-P, .name6-T-P, .name7-T-P, .name8-T-P, .name9-T-P, .name10-T-P  {
+	font-weight: bold;
+	font-size: 1.1em;
+	color: #11EE00;
+	text-shadow: 2px 2px 2px #000000;
+}
+.name0-T,.name1-T,.name2-T,.name3-T,.name4-T,.name5-T,.name6-T,.name7-T,.name8-T,.name9-T,.name10-T,.name11-T
+{
+	font-weight: bold;
+	font-size: 1.1em;
+	color: #66FF99;
+	text-shadow: 2px 2px 2px #000000;
+}
+
+.guild
+{
+	border-radius: 10px;
+}
+
+/* Classes CB */
+
+.stafftag	{	color: red;		text-shadow: 1px 1px 1px grey;	}
+.tag		{	color: yellow;	text-shadow: 2px 2px 2px black;	}
+
+/* Classes de fiches personnages (J/NJ) */
+
+.perso
+{
+	border-collapse: collapse;
+    border-style: none;
+    margin: auto;
+    width: 750px;
+}
+
+.perso img	{	vertical-align: middle;		}
+
+.perso th
+{
+	font-size:15px;
+	text-align:left;
+	padding:10px;
+}
+
+.perso td
+{
+	font-size:15px;
+	padding:10px;
+}
+
+.pnjtable td
+{
+	background-color: white;
+	border: 4px black solid;
+	padding-right : 5px;
+	padding-left : 5px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.pnjtable img	{	border-radius: 10px;	}
+
+.pnjtable
+{
+	padding : 20px;
+	border: 3px black solid;
+	background-color: grey;
 }
