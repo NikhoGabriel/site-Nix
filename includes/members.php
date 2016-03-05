@@ -190,7 +190,7 @@
 		<td style="text-align: center;"><img src="pics/valid_bg_<? echo $valid_bg ?>.gif" alt="" title="<? echo $bgtitle ?>" /></td>
 		<td style="text-align: center;"><? echo $line3['fofo']?></td>
 		<td style="text-align: center;"><img src="pics/magieok_<? echo $magieok ?>.gif" alt="" title="<? echo $magietitle?>" /></td>
-		<td style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="Mage de niveau <?= ($line["magie_rank"])?>" title="<? echo $mrank?>" /></td>
+		<td style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="" title="<? echo $mrank?>" /></td>
 		<td style="text-align: center;"><? echo $line2['sort']?></td>
 		<td style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" alt="Spécialisation : <?= ($line['specialisation'])?>" width="27" class="magie_type" title="Spécialisation : <?= ($line['specialisation'])?>" /></td>
 		<td style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="" title="<?= ($line['race'])?>" />
@@ -564,7 +564,7 @@
 		<td style="text-align: center;"><img src="pics/magie_rank_<?= $line['magie_rank']?>.gif" alt="" title="<? echo $mrank?>" /></td>
 		<td style="text-align: center;"><? echo $line2['sort']?></td>
 		<? if ($_SESSION["rank"] >= 3) {	?><td style="text-align: center;"><img src="pics/spe_<?= ($line['specialisation'])?>.png" class="magie_type" width="27" alt="" title="Spécialisation : <?= ($line['specialisation'])?>" /></td><? } ?>
-		<td style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="Race <?= ($line['race'])?>" title="<?= ($line['race'])?>" />
+		<td style="text-align: center;"><img src="pics/<?= ($line['race'])?>.png" alt="" title="<?= ($line['race'])?>" />
 		<td style="text-align: center;"><img src="pics/hardcore<?= ($line['hardcore'])?>.png" alt="" title="<? echo $cycle ?>ortel" /></td>
 	<? if ($_SESSION["rank"] >= 5) {	?> <td style="text-align: center;"><img src="pics/vanish<? echo $vanish ?>.gif" alt="" title="<? echo $title ?>isible" /></td> <? } ?>
 	<td style="text-align: center;"><img src="/pics/magie/EM_<? echo $tmagie ?>.png" title="<?if ($line['magie_rank'] <= 6) { ?><?=$line['E_magique']?> PM restants !<? } ?> <?if ($line['magie_rank'] >= 7) { echo "PM Illimités" ;} ?>" alt="" /><br /><img src="/pics/magie/EV_<? echo $tvie ?>.png" title="<?= $line['E_vitale']?> PV restants !" alt="" /></td>
