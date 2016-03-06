@@ -2,8 +2,8 @@
 {
 	global $db, $_POST;
 
-	define('rank_add_news', 5);
-	define('rank_manage_news', 5);
+	define('rank_add_news', 6);
+	define('rank_manage_news', 6);
 
 	if ($action == 'disp')
 	{
